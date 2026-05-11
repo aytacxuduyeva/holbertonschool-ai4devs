@@ -1,0 +1,9 @@
+# Final Risk Assessment Report
+
+| Risk Name | Severity | Detailed Context & Actionable Notes |
+| :--- | :--- | :--- |
+| **Hardcoded Credentials** | **Critical** | **Description:** `config.php` daxilində verilənlər bazası şifrələri və API açarları birbaşa mətn formasında saxlanılır.<br>**Impact:** Repozitoriyaya giriş əldə edən hər kəs sistemə tam sızma edə bilər.<br>**Mitigation:** Həssas məlumatlar `.env` faylına köçürülməli və mühit dəyişənləri kimi oxunmalıdır. |
+| **SQL Injection** | **Critical** | **Description:** İstifadəçi daxil etdiyi məlumatlar (`$_GET['id']`) birbaşa SQL sorğusuna ötürülür.<br>**Impact:** Hücumçular bütün verilənlər bazasını oğurlaya və ya silə bilər.<br>**Mitigation:** PDO və ya MySQLi "Prepared Statements" mexanizminə mütləq keçid edilməlidir. |
+| **Deprecated API Usage** | **High** | **Description:** PHP 7-dən sonra dəstəklənməyən köhnə `mysql_*` funksiyalarından istifadə edilir.<br>**Impact:** Server yenilənməsi zamanı tətbiq tamamilə fəaliyyətini dayandıracaq.<br>**Mitigation:** Kod bazası müasir PDO obyektləri ilə yenidən yazılmalıdır. |
+| **Lack of Rate Limiting** | **High** | **Description:** Giriş (`/login`) hissəsində sorğu sayına görə heç bir məhdudiyyət yoxdur.<br>**Impact:** Avtomatlaşdırılmış botlar vasitəsilə "Brute Force" hücumları edilərək istifadəçi hesabları sındırıla bilər.<br>**Mitigation:** Müvəffəqiyyətsiz cəhdlərdən sonra IP-yə əsaslanan bloklama sistemi qurulmalıdır. |
+| **Insecure File Permissions** | **Medium** | **Description:** Konfiqurasiya faylları hamı tərəfindən oxuna bilən (`world-readable`) statusdadır.<br>**Impact:** Eyni hostinq mühitindəki digər istifadəçilər sizin konfiqurasiya məlumatlarınızı oxuya bilər.<br>**Mitigation:** Fayl icazələri `640` (fayl sahibi oxuya və yaza bilsin, qrup yalnız oxusun) səviyyəsinə endirilməlidir. |
